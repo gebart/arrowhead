@@ -2,7 +2,6 @@
 
 This is a C++ library for interfacing with Arrowhead services.
 
-
 This project is very much a work in progress and the API is still subject to
 major changes on a daily basis. The library is not ready for mainstream usage.
 
@@ -46,3 +45,9 @@ basic Unix build:
     make doc
 
 API documentation is generated using Doxygen.
+
+## Documentation
+
+Online API documentation can be found at http://gebart.github.io/arrowhead/api/index.html
+
+Generating documentation locally is done with the `make doc` command.
