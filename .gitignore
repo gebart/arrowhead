@@ -1,0 +1,57 @@
+# build directories
+/build/
+
+# C++ objects and libs
+
+*.slo
+*.lo
+*.o
+*.a
+*.la
+*.lai
+*.so
+*.dll
+*.dylib
+
+# Qt-es
+
+/.qmake.cache
+/.qmake.stash
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qbs.user.*
+*.moc
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+Makefile*
+*-build-*
+
+# QtCreator
+
+*.autosave
+
+#QtCtreator Qml
+*.qmlproject.user
+*.qmlproject.user.*
+
+# Backup files
+*~
+*.orig
+.*.swp
+# Eclipse workspace files
+.project
+.cproject
+.settings
+.idea
+# KDevelop4 project files
+.kdev4
+*.kdev4
+# Codelite (among others) project files
+*.project
+# Geany projects
+*.geany
+# ctags index files
+tags
+*.tags
