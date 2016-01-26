@@ -1,0 +1,7 @@
+<map id="include/arrowhead/core_services/serviceregistry.hpp" name="include/arrowhead/core_services/serviceregistry.hpp">
+<area shape="rect" id="node4" href="$service_8hpp.html" title="Service representation definitions. " alt="" coords="21,244,174,271"/>
+<area shape="rect" id="node6" href="$http_8hpp.html" title="HTTP CURL interface. " alt="" coords="267,95,400,121"/>
+<area shape="rect" id="node13" href="$logging_8hpp.html" title="Logging interface definitions. " alt="" coords="782,244,934,271"/>
+<area shape="rect" id="node9" href="$detail_2http_8hpp.html" title="HTTP CURL wrapper template definitions. " alt="" coords="468,169,636,196"/>
+<area shape="rect" id="node11" href="$exception_8hpp.html" title="Exception classes. " alt="" coords="493,244,660,271"/>
+</map>

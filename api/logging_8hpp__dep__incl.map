@@ -1,0 +1,14 @@
+<map id="include/arrowhead/logging.hpp" name="include/arrowhead/logging.hpp">
+<area shape="rect" id="node2" href="$serviceregistry_8hpp.html" title="Arrowhead Service Registry interface classes. " alt="" coords="233,244,425,285"/>
+<area shape="rect" id="node3" href="$ahq_8cpp.html" title="Arrowhead query command&#45;line client application implementation. " alt="" coords="441,341,547,367"/>
+<area shape="rect" id="node6" href="$detail_2http_8hpp.html" title="HTTP CURL wrapper template definitions. " alt="" coords="503,80,666,121"/>
+<area shape="rect" id="node9" href="$detail_2xml_8hpp.html" title="XML processing template definitions. " alt="" coords="690,80,853,121"/>
+<area shape="rect" id="node12" href="$logging_8cpp.html" title="Logging implementation. " alt="" coords="877,87,1031,114"/>
+<area shape="rect" id="node13" href="$test__main_8cpp.html" title="Test applications main program entry point. " alt="" coords="1056,87,1193,114"/>
+<area shape="rect" id="node4" href="$serviceregistry_8cpp.html" title="Service Registry interface implementation. " alt="" coords="5,341,244,367"/>
+<area shape="rect" id="node5" href="$test__servicelist_8cpp.html" title="Service registry list query tests implementation. " alt="" coords="269,333,407,375"/>
+<area shape="rect" id="node7" href="$http_8hpp.html" title="HTTP CURL interface. " alt="" coords="499,169,678,196"/>
+<area shape="rect" id="node8" href="$http_8cpp.html" title="HTTP communication implementation. " alt="" coords="550,251,697,278"/>
+<area shape="rect" id="node10" href="$xml_8hpp.html" title="XML processing API declarations. " alt="" coords="703,169,880,196"/>
+<area shape="rect" id="node11" href="$test__parse_8cpp.html" title="Service registry XML parsing tests implementation. " alt="" coords="772,251,939,278"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="Arrowhead::HTTP::CURLContext::set_write_iterator" name="Arrowhead::HTTP::CURLContext::set_write_iterator">
+<area shape="rect" id="node2" href="$class_arrowhead_1_1_service_registry_h_t_t_p.html#ac4220c3e3a5050f5497d41976a2dfc6e" title="List all services of the given type, or all services if type is empty. " alt="" coords="272,5,457,47"/>
+<area shape="rect" id="node4" href="$class_arrowhead_1_1_service_registry_h_t_t_p.html#a1ecc9f82d68f44caa7e2b5e2129011bc" title="Publish the given service in the service registry. " alt="" coords="272,71,457,112"/>
+<area shape="rect" id="node6" href="$class_arrowhead_1_1_service_registry_h_t_t_p.html#a0147f39cb31717126ea8027d058c58e7" title="Publish the given service in the service registry. " alt="" coords="272,136,457,177"/>
+<area shape="rect" id="node3" href="$class_arrowhead_query_app.html#af8dd579d4e6d88e7def4ff8b79e4df6b" title="Query service registry and print results to standard output. " alt="" coords="505,13,672,39"/>
+<area shape="rect" id="node5" href="$class_arrowhead_query_app.html#abcb0d412d16a176c6cedbaf328faaea4" title="Publish a service in the service registry. " alt="" coords="513,71,664,112"/>
+<area shape="rect" id="node7" href="$class_arrowhead_query_app.html#a19dd007eb38b598b2b7ff76bdf53b176" title="Unpublish (delete) a service in the service registry. " alt="" coords="513,136,664,177"/>
+</map>
