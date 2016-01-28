@@ -9,7 +9,7 @@ execute_process(
 )
 if("${VCS_VERSION}" STREQUAL "")
      execute_process(
-          COMMAND ${GIT_EXECUTABLE} log --pretty=format:%cd-g%h --date=short --abbrev-commit
+          COMMAND ${GIT_EXECUTABLE} log --pretty=format:%cd-g%h --date=short --abbrev-commit -1
           OUTPUT_VARIABLE VCS_VERSION
           ERROR_VARIABLE _git_error_msg
           OUTPUT_STRIP_TRAILING_WHITESPACE
