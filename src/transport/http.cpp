@@ -22,6 +22,10 @@
  * @author      Joakim Gebart Nohlgård <joakim@nohlgard.se>
  */
 
+#include "arrowhead/config.h"
+
+#if ARROWHEAD_USE_LIBCURL
+
 #include <stdexcept>
 #include <curl/curl.h>
 #include "arrowhead/http.hpp"
@@ -110,3 +114,5 @@ void CURLContext::add_header(const char *str)
 
 } // namespace HTTP
 } // namespace Arrowhead
+
+#endif /* ARROWHEAD_USE_LIBCURL */

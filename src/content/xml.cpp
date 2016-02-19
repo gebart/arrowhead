@@ -22,10 +22,12 @@
  * @author      Joakim Gebart Nohlgård <joakim@nohlgard.se>
  */
 
+#include "arrowhead/config.h"
+
+#if ARROWHEAD_USE_PUGIXML
+
 #include <string>
 #include <sstream>
-
-#include "arrowhead/config.h"
 
 #include <pugixml.hpp>
 
@@ -93,3 +95,5 @@ ServiceDescription to_service(const pugi::xml_node& srv)
 } /* namespace XML */
 
 } /* namespace Arrowhead */
+
+#endif /* ARROWHEAD_USE_PUGIXML */

@@ -25,9 +25,9 @@
 #ifndef ARROWHEAD_XML_HPP_
 #define ARROWHEAD_XML_HPP_
 
-#include <cstddef> // for size_t
-
 #include "arrowhead/config.h"
+
+#include <cstddef> // for size_t
 
 namespace Arrowhead {
 

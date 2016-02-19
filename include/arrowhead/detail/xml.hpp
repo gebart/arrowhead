@@ -45,6 +45,7 @@ namespace XML {
  * @{
  */
 
+#if ARROWHEAD_USE_PUGIXML
 /**
  * @brief Translate a single XML `<service>` node into a ServiceDescription
  *
@@ -65,6 +66,8 @@ ServiceDescription to_service(const pugi::xml_node& srv);
  */
 void parse_buffer(pugi::xml_document& doc, const char *xmlbuf, size_t buflen);
 
+#endif /* ARROWHEAD_USE_PUGIXML */
+
 /** @} */
 
 } /* namespace XML */
@@ -77,6 +80,13 @@ template<class OutputIt, class StringType>
     return parse_servicelist_xml(oit, xml_str.c_str(), xml_str.size());
 }
 
+template<class OutputIt, class StringType>
+    ServiceDescription parse_service_xml(const StringType& xml_str)
+{
+    return parse_service_xml(xml_str.c_str(), xml_str.size());
+}
+
+#if ARROWHEAD_USE_PUGIXML
 template<class OutputIt>
     OutputIt parse_servicelist_xml(OutputIt oit,
         const char *xmlbuf, size_t buflen)
@@ -94,13 +104,9 @@ template<class OutputIt>
 
     return oit;
 }
+#endif /* ARROWHEAD_USE_PUGIXML */
 
-template<class OutputIt, class StringType>
-    ServiceDescription parse_service_xml(const StringType& xml_str)
-{
-    return parse_service_xml(xml_str.c_str(), xml_str.size());
-}
-
+#if ARROWHEAD_USE_PUGIXML
 template<class OutputIt>
     ServiceDescription parse_service_xml(const char *xmlbuf, size_t buflen)
 {
@@ -112,6 +118,7 @@ template<class OutputIt>
     }
     return XML::to_service(srv);
 }
+#endif /* ARROWHEAD_USE_PUGIXML */
 
 } /* namespace Arrowhead */
 #endif /* ARROWHEAD_DETAIL_XML_HPP_ */

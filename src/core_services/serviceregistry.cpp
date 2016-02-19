@@ -22,6 +22,10 @@
  * @author      Joakim Gebart Nohlgård <joakim@nohlgard.se>
  */
 
+#include "arrowhead/config.h"
+
+#if ARROWHEAD_USE_LIBCURL
+
 #include <string>
 #include <iterator>
 #include <sstream>
@@ -214,3 +218,5 @@ std::string ServiceRegistryHTTP::unpublish(std::string name)
 
 
 } /* namespace Arrowhead */
+
+#endif /* ARROWHEAD_USE_LIBCURL */

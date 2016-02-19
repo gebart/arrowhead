@@ -2,8 +2,6 @@
 # dependencies
 #
 
-find_package(Boost 1.40 COMPONENTS program_options REQUIRED)
-
 # Build libarrowheadcpp
 set(LIB_SRC_FILES
     core_services/serviceregistry.cpp
@@ -27,7 +25,10 @@ if(ARROWHEAD_USE_LOG4CPLUS)
 endif()
 
 
+if (ARROWHEAD_USE_PUGIXML AND ARROWHEAD_USE_LIBCURL)
 # Build the ahq (Arrowhead Query) command line utility
+find_package(Boost 1.40 COMPONENTS program_options REQUIRED)
+
 set(AHQ_SRC_FILES
     cli/ahq.cpp
     )
@@ -37,6 +38,9 @@ add_dependencies(ahq version)
 target_link_libraries(ahq ${PROJECT_NAME})
 # and Boost (for Boost::program_options)
 target_link_libraries(ahq ${Boost_LIBRARIES})
+else()
+  message("ahq requires both libcurl and pugixml to be enabled")
+endif()
 
 #
 # installation & bundling

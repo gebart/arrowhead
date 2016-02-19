@@ -25,9 +25,11 @@
 #ifndef ARROWHEAD_HTTP_HPP_
 #define ARROWHEAD_HTTP_HPP_
 
-#include <cstddef>
-
 #include "arrowhead/config.h"
+
+#if ARROWHEAD_USE_LIBCURL
+
+#include <cstddef>
 
 #include <curl/curl.h>
 
@@ -117,5 +119,7 @@ class CURLContext {
 } /* namespace Arrowhead */
 
 #include "arrowhead/detail/http.hpp"
+
+#endif /* ARROWHEAD_USE_LIBCURL */
 
 #endif /* ARROWHEAD_HTTP_HPP_ */

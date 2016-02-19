@@ -22,6 +22,7 @@
  * @author      Joakim Gebart Nohlgård <joakim@nohlgard.se>
  */
 
+#include "arrowhead/config.h"
 #include "arrowhead/logging.hpp"
 
 #if ARROWHEAD_USE_LOG4CPLUS
