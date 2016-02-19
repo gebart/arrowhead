@@ -60,7 +60,7 @@ if(ARROWHEAD_USE_LIBCURL)
   find_package(CURL REQUIRED)
 endif()
 
-option(ARROWHEAD_USE_LIBCOAP "Build library with CoAP support using libcoap" ON)
+option(ARROWHEAD_USE_LIBCOAP "Build library with CoAP support using libcoap" OFF)
 if(ARROWHEAD_USE_LIBCOAP)
   find_package(CoAP REQUIRED)
 endif()
