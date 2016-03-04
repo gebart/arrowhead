@@ -137,10 +137,12 @@ std::string ServiceRegistryHTTP::publish(ServiceDescription service)
 
     ARROWHEAD_LIB_DEBUG(logger, "POST: " << postdata.str());
 
+    std::string poststr = postdata.str();
+
     /* Set POST data */
-    curl_easy_setopt(ctx.curl, CURLOPT_POSTFIELDS, postdata.str().c_str());
+    curl_easy_setopt(ctx.curl, CURLOPT_POSTFIELDS, poststr.c_str());
     /* if we don't provide POSTFIELDSIZE, libcurl will call strlen() by itself */
-    curl_easy_setopt(ctx.curl, CURLOPT_POSTFIELDSIZE, postdata.str().size());
+    curl_easy_setopt(ctx.curl, CURLOPT_POSTFIELDSIZE, poststr.size());
 
     /* Set URL */
     std::string url = url_base + "/publish";
