@@ -287,11 +287,15 @@ void ArrowheadQueryApp::publish(std::list<std::string> args)
     ARROWHEAD_LIB_TRACE(logger, "+ArrowheadQueryApp::publish");
     ServiceRegistryHTTP servicereg(options["url"].as<std::string>());
 
+    if (args.empty()) {
+        throw(std::runtime_error("ahq::publish Missing name"));
+    }
     ServiceDescription srv;
-    srv.name = "ahqtest._rpm-coap._udp.srv.arrowhead.ltu.se.";
+    srv.name = args.front();
+    args.pop_front();
     srv.type = "_rpm-coap._udp";
-    srv.domain = "arrowhead.nohlgard.se.";
-    srv.host = "test1.arrowhead.nohlgard.se.";
+    srv.domain = "arrowhead.localtest.";
+    srv.host = "ahq.example.com.";
     srv.port = 12345;
     srv.properties["path"] = std::string("/rpm");
     srv.properties["version"] = std::string("0.1");
