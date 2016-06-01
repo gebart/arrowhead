@@ -293,12 +293,38 @@ void ArrowheadQueryApp::publish(std::list<std::string> args)
     ServiceDescription srv;
     srv.name = args.front();
     args.pop_front();
-    srv.type = "analog-out._sub._lwm2m._udp";
-    srv.domain = "local.arrowhead.eu.";
-    srv.host = "ahq.example.com.";
-    srv.port = 5683;
-    srv.properties["path"] = std::string("/3203/0/0/5650");
-    srv.properties["version"] = std::string("0.1");
+    std::cout << "Enter service information" << std::endl;
+    std::cout << "type (e.g. \"analog-out-ipso._sub._lwm2m._udp\"):" << std::endl;
+    std::cout << "> " << std::flush;
+    std::getline(std::cin, srv.type);
+    std::cout << "domain (e.g. \"local.arrowhead.eu.\"):" << std::endl;
+    std::cout << "> " << std::flush;
+    std::getline(std::cin, srv.domain);
+    std::cout << "host (e.g. \"ahq.example.com\". or \"192.168.2.1\" or \"fdfd::ff\"):" << std::endl;
+    std::cout << "> " << std::flush;
+    std::getline(std::cin, srv.host);
+    std::cout << "port number (e.g. \"5683\"):" << std::endl;
+    std::cout << "> " << std::flush;
+    std::string buf;
+    std::getline(std::cin, buf);
+    std::istringstream ss(buf);
+    ss >> srv.port;
+    std::cout << "port: " << srv.port;
+    std::cout << "properties" << std::endl;
+    while (true) {
+        std::cout << "property name (e.g. \"version\", leave blank to end properties input):" << std::endl;
+        std::cout << "> " << std::flush;
+        std::string propname;
+        std::getline(std::cin, propname);
+        if (propname.empty()) {
+            break;
+        }
+        std::cout << "property value (e.g. \"1.0\"):" << std::endl;
+        std::cout << "> " << std::flush;
+        std::string propvalue;
+        std::getline(std::cin, propvalue);
+        srv.properties[propname] = propvalue;
+    };
 
     servicereg.publish(srv);
     ARROWHEAD_LIB_TRACE(logger, "-ArrowheadQueryApp::publish");
