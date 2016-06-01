@@ -140,7 +140,7 @@ int ArrowheadQueryApp::init(int argc, char * argv[])
     config.add_options()
         ("url,u",
             po::value<std::string>()->
-            default_value("http://ns.arrowhead.ltu.se:8045/servicediscovery"),
+            default_value("http://localhost:8045/servicediscovery"),
             "REST API URL base")
         ("logconf",
             po::value<std::string>()->
