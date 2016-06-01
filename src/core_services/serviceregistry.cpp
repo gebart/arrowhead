@@ -58,7 +58,7 @@ void libcurl_perform_checked_throw(HTTP::CURLContext& ctx)
     }
     long http_code = 0;
     curl_easy_getinfo (ctx.curl, CURLINFO_RESPONSE_CODE, &http_code);
-    if (http_code != 200)
+    if ((http_code < 200) || (http_code >= 299))
     {
         std::ostringstream ss;
         ss << "HTTPError " << http_code;
