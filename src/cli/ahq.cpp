@@ -293,11 +293,11 @@ void ArrowheadQueryApp::publish(std::list<std::string> args)
     ServiceDescription srv;
     srv.name = args.front();
     args.pop_front();
-    srv.type = "_rpm-coap._udp";
-    srv.domain = "arrowhead.localtest.";
+    srv.type = "analog-out._sub._lwm2m._udp";
+    srv.domain = "local.arrowhead.eu.";
     srv.host = "ahq.example.com.";
-    srv.port = 12345;
-    srv.properties["path"] = std::string("/rpm");
+    srv.port = 5683;
+    srv.properties["path"] = std::string("/3203/0/0/5650");
     srv.properties["version"] = std::string("0.1");
 
     servicereg.publish(srv);
