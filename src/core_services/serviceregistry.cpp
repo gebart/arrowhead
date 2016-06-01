@@ -68,6 +68,40 @@ void libcurl_perform_checked_throw(HTTP::CURLContext& ctx)
 }
 }
 
+std::string ServiceRegistryHTTP::types(void)
+{
+    ARROWHEAD_LIB_LOGGER(logger, "ServiceRegistryHTTP::types");
+    ARROWHEAD_LIB_TRACE(logger, "+ServiceRegistryHTTP::types");
+    HTTP::CURLContext ctx;
+    std::ostringstream buf;
+
+    /* Set URL */
+    std::string url = url_base;
+
+    /* List all types */
+    url += "/type";
+
+    curl_easy_setopt(ctx.curl, CURLOPT_URL, url.c_str());
+
+    /* Set Accept: header */
+    ctx.add_header("Accept: application/xml");
+
+    /* Set up callback */
+    ctx.set_write_iterator(std::ostream_iterator<char>(buf));
+
+    try {
+        libcurl_perform_checked_throw(ctx);
+    }
+    catch (TransportError &e) {
+        ARROWHEAD_LIB_ERROR(logger, e.what());
+        ARROWHEAD_LIB_DEBUG(logger, std::string("Remote said: ") + buf.str());
+        throw e;
+    }
+
+    /* Success, proceed with parsing XML */
+    return buf.str();
+}
+
 std::string ServiceRegistryHTTP::list(std::string type)
 {
     ARROWHEAD_LIB_LOGGER(logger, "ServiceRegistryHTTP::list");

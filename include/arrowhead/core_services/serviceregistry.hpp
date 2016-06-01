@@ -60,6 +60,13 @@ class ServiceRegistryHTTP {
         {}
 
         /**
+         * @brief List all available service types
+         *
+         * @return HTTP response content (XML string)
+         */
+        std::string types(void);
+
+        /**
          * @brief List all services of the given type, or all services if type is empty
          *
          * @param[in] type   Service type, use "" to list all services of any type
