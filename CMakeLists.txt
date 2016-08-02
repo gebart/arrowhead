@@ -65,6 +65,8 @@ if(ARROWHEAD_USE_LIBCOAP)
   find_package(CoAP REQUIRED)
 endif()
 
+option(ARROWHEAD_USE_JSON "Build library with JSON support using bundled nlohmann::json" ON)
+
 configure_file(${CMAKE_SOURCE_DIR}/include/arrowhead/config.h.in ${CMAKE_BINARY_DIR}/include/arrowhead/config.h)
 
 # The project version number.

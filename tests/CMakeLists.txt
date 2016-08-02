@@ -34,3 +34,14 @@ if(ARROWHEAD_USE_LIBCURL)
   endif()
 endif()
 
+# JSON tests
+if(ARROWHEAD_USE_JSON)
+  add_executable(test_json test_main.cpp json/test_parse.cpp)
+  add_test(JSON test_json)
+  add_dependencies(test_json version)
+  target_link_libraries(test_json ${PROJECT_NAME})
+  if(ARROWHEAD_USE_LOG4CPLUS)
+    target_link_libraries(test_json ${LOG4CPLUS_LIBRARIES})
+  endif()
+endif()
+

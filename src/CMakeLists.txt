@@ -6,6 +6,7 @@
 set(LIB_SRC_FILES
     core_services/serviceregistry.cpp
     content/xml.cpp
+    content/json.cpp
     logging/logging.cpp
     transport/http.cpp
     )
