@@ -40,7 +40,7 @@ SCENARIO( "Service registry REST API", "[serviceregistry]" ) {
         }
     }
     GIVEN("a ServiceRegistryHTTP instance with a proper URL") {
-        Arrowhead::ServiceRegistryHTTP reg("http://ns.arrowhead.ltu.se:8045/servicediscovery");
+        Arrowhead::ServiceRegistryHTTP reg("http://localhost:8045/servicediscovery");
 
         WHEN("a service list is requested") {
             THEN("a non-empty string is returned") {
