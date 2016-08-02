@@ -80,7 +80,7 @@ template<class OutputIt, class StringType>
     return parse_servicelist_xml(oit, xml_str.c_str(), xml_str.size());
 }
 
-template<class OutputIt, class StringType>
+template<class StringType>
     ServiceDescription parse_service_xml(const StringType& xml_str)
 {
     return parse_service_xml(xml_str.c_str(), xml_str.size());
@@ -103,20 +103,6 @@ template<class OutputIt>
     }
 
     return oit;
-}
-#endif /* ARROWHEAD_USE_PUGIXML */
-
-#if ARROWHEAD_USE_PUGIXML
-template<class OutputIt>
-    ServiceDescription parse_service_xml(const char *xmlbuf, size_t buflen)
-{
-    pugi::xml_document doc;
-    XML::parse_buffer(doc, xmlbuf, buflen);
-    auto srv = doc.child("service");
-    if (!srv) {
-        throw ContentError("parse_service_xml: no <service> tag");
-    }
-    return XML::to_service(srv);
 }
 #endif /* ARROWHEAD_USE_PUGIXML */
 

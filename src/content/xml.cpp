@@ -92,6 +92,17 @@ ServiceDescription to_service(const pugi::xml_node& srv)
     return sd;
 }
 
+ServiceDescription parse_service(const char *xmlbuf, size_t buflen)
+{
+    pugi::xml_document doc;
+    XML::parse_buffer(doc, xmlbuf, buflen);
+    auto srv = doc.child("service");
+    if (!srv) {
+        throw ContentError("Arrowhead::XML::parse_service: no <service> tag");
+    }
+    return XML::to_service(srv);
+}
+
 } /* namespace XML */
 
 } /* namespace Arrowhead */
