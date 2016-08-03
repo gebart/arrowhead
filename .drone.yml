@@ -12,3 +12,8 @@ build:
 compose:
     serviceregistry:
         image: eistec/arrowhead-service-registry
+
+matrix:
+    CXX:
+        - clang++
+        - g++
