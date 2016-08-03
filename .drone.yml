@@ -7,3 +7,6 @@ build:
             - cmake ..
             - make
             - make test
+compose:
+    serviceregistry:
+        image: eistec/arrowhead-service-registry
