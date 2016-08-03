@@ -1,0 +1,9 @@
+build:
+    run_tests:
+        image: eistec/cpp-ci:latest
+        commands:
+            - mkdir build
+            - cd build
+            - cmake ..
+            - make
+            - make test
