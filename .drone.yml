@@ -4,6 +4,7 @@ build:
         environment:
             - CLICOLOR_FORCE=1
         commands:
+            - export $$TOOLCHAIN
             - mkdir build
             - cd build
             - cmake ..
@@ -14,6 +15,6 @@ compose:
         image: eistec/arrowhead-service-registry
 
 matrix:
-    CXX:
-        - clang++
-        - g++
+    TOOLCHAIN:
+        - CC=clang CXX=clang++
+        - CC=gcc CXX=g++
