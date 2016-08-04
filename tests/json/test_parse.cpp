@@ -24,7 +24,6 @@
 
 #include "catch.hpp"
 #include "arrowhead/service.hpp"
-#include "arrowhead/json.hpp"
 #include <vector>
 #include <iterator>
 

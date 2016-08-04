@@ -28,7 +28,6 @@
 #if ARROWHEAD_USE_JSON
 
 #include "arrowhead/service.hpp"
-#include "arrowhead/json.hpp"
 
 #include "nlohmann/json.hpp"
 
@@ -39,7 +38,7 @@ namespace Arrowhead {
 
 namespace JSON {
 
-ServiceDescription to_service(const json& srv)
+ServiceDescription service_from_obj(const json& srv)
 {
     ServiceDescription sd;
     sd.name = srv["name"];
@@ -59,10 +58,10 @@ ServiceDescription to_service(const json& srv)
 
 } /* namespace JSON */
 
-ServiceDescription parse_service_json(const char *jsbuf, size_t buflen)
+ServiceDescription ServiceDescription::from_json(const char *jsbuf, size_t buflen)
 {
     const std::string js_str(jsbuf, buflen);
-    return parse_service_json(js_str);
+    return ServiceDescription::from_json(js_str);
 }
 
 } /* namespace Arrowhead */

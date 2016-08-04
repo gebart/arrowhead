@@ -22,8 +22,8 @@
  * @author      Joakim Nohlgård <joakim@nohlgard.se>
  */
 
-#ifndef ARROWHEAD_DETAIL_JSON_HPP_
-#define ARROWHEAD_DETAIL_JSON_HPP_
+#ifndef ARROWHEAD_DETAIL_SERVICE_JSON_HPP_
+#define ARROWHEAD_DETAIL_SERVICE_JSON_HPP_
 
 #include <cstddef> // for size_t
 #include <sstream>
@@ -49,13 +49,14 @@ namespace JSON {
 
 #if ARROWHEAD_USE_JSON
 /**
- * @brief Translate a single JSON service object into a ServiceDescription
+ * @internal
+ * @brief Translate a single JSON object into a ServiceDescription
  *
  * @param[in] srv  A JSON object
  *
  * @return ServiceDescription object with fields filled from the JSON content
  */
-ServiceDescription to_service(const nlohmann::json& srv);
+ServiceDescription service_from_obj(const nlohmann::json& srv);
 
 #endif /* ARROWHEAD_USE_JSON */
 
@@ -63,18 +64,17 @@ ServiceDescription to_service(const nlohmann::json& srv);
 
 } /* namespace JSON */
 
-/* Implementations of templates declared in include/arrowhead/json.hpp */
+/* Definitions of templates declared in include/arrowhead/json.hpp */
 #if ARROWHEAD_USE_JSON
 template<class OutputIt, class StringType>
     OutputIt parse_servicelist_json(OutputIt oit, const StringType& js_str)
 {
     nlohmann::json js = nlohmann::json::parse(js_str);
-
     nlohmann::json srvl = js["service"];
 
     for (auto it = srvl.begin(); it != srvl.end(); ++it)
     {
-        ServiceDescription srv = JSON::to_service(*it);
+        ServiceDescription srv = JSON::service_from_obj(*it);
         *oit++ = srv;
     }
 
@@ -84,10 +84,10 @@ template<class OutputIt, class StringType>
 
 #if ARROWHEAD_USE_JSON
 template<class StringType>
-    ServiceDescription parse_service_json(const StringType& js_str)
+    ServiceDescription ServiceDescription::from_json(const StringType& js_str)
 {
     nlohmann::json js = nlohmann::json::parse(js_str);
-    return JSON::to_service(js);
+    return JSON::service_from_obj(js);
 }
 #endif /* ARROWHEAD_USE_JSON */
 
@@ -100,5 +100,5 @@ template<class OutputIt>
 }
 
 } /* namespace Arrowhead */
-#endif /* ARROWHEAD_DETAIL_JSON_HPP_ */
+#endif /* ARROWHEAD_DETAIL_SERVICE_JSON_HPP_ */
 
