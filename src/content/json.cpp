@@ -31,14 +31,11 @@
 
 #include "nlohmann/json.hpp"
 
-// for convenience
-using json = nlohmann::json;
-
 namespace Arrowhead {
 
 namespace JSON {
 
-ServiceDescription service_from_obj(const json& srv)
+ServiceDescription service_from_obj(const nlohmann::json& srv)
 {
     ServiceDescription sd;
     sd.name = srv["name"];
@@ -46,7 +43,7 @@ ServiceDescription service_from_obj(const json& srv)
     sd.domain = srv["domain"];
     sd.host = srv["host"];
     sd.port = srv["port"];
-    json props = srv["properties"]["property"];
+    nlohmann::json props = srv["properties"]["property"];
     for (auto it = props.begin(); it != props.end(); ++it)
     {
         std::string name = (*it)["name"];

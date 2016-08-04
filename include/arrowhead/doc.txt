@@ -52,6 +52,7 @@
  */
 
 /**
+ * @internal
  * @defgroup http_detail Implementation details
  * @ingroup  http
  *
@@ -77,6 +78,26 @@
  * @brief  Functions and classes for dealing with service descriptions
  */
 
+/**
+ * @defgroup json  JSON handling
+ *
+ * @brief  JSON content handling functions and classes
+ */
+
+/**
+ * @internal
+ * @defgroup json_detail Implementation details
+ * @ingroup  json
+ *
+ * @brief  JSON content implementation details
+ */
+
+/**
+ * @namespace Arrowhead::JSON
+ * @ingroup json_detail
+ *
+ * @brief  Name space for JSON implementation details
+ */
 
 /**
  * @defgroup xml  XML handling
@@ -85,10 +106,11 @@
  */
 
 /**
+ * @internal
  * @defgroup xml_detail Implementation details
  * @ingroup  xml
  *
- * @brief  HTTP communication implementation details
+ * @brief  XML content implementation details
  */
 
 /**
