@@ -17,7 +17,7 @@
 
 /**
  * @file
- * @brief       Arrowhead XML parsing helpers implementation
+ * @brief       Arrowhead XML parsing implementation
  *
  * @author      Joakim Gebart Nohlgård <joakim@nohlgard.se>
  */
@@ -35,6 +35,17 @@
 #include "arrowhead/service.hpp"
 
 namespace Arrowhead {
+
+ServiceDescription ServiceDescription::from_xml(const char *xmlbuf, size_t buflen)
+{
+    pugi::xml_document doc;
+    XML::parse_buffer(doc, xmlbuf, buflen);
+    auto srv = doc.child("service");
+    if (!srv) {
+        throw ContentError("Arrowhead::XML::parse_service: no <service> tag");
+    }
+    return XML::service_from_node(srv);
+}
 
 namespace XML {
 
@@ -74,7 +85,7 @@ void parse_buffer(pugi::xml_document& doc, const char *xmlbuf, size_t buflen)
     }
 }
 
-ServiceDescription to_service(const pugi::xml_node& srv)
+ServiceDescription service_from_node(const pugi::xml_node& srv)
 {
     pugi::xpath_query inner_text(".");
     ServiceDescription sd;
@@ -90,17 +101,6 @@ ServiceDescription to_service(const pugi::xml_node& srv)
         sd.properties[name] = value;
     }
     return sd;
-}
-
-ServiceDescription parse_service(const char *xmlbuf, size_t buflen)
-{
-    pugi::xml_document doc;
-    XML::parse_buffer(doc, xmlbuf, buflen);
-    auto srv = doc.child("service");
-    if (!srv) {
-        throw ContentError("Arrowhead::XML::parse_service: no <service> tag");
-    }
-    return XML::to_service(srv);
 }
 
 } /* namespace XML */

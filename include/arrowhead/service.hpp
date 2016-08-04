@@ -54,9 +54,86 @@ struct ServiceDescription {
     unsigned int port;
     /// Additional properties (key-value pairs)
     std::map<std::string, std::string> properties;
+
+    /**
+     * @ingroup  xml
+     * @{
+     */
+
+    /**
+     * @brief Parse an XML representation of a single service
+     *
+     * @param[in]    xml_str XML document string containing a `<service>` tag
+     *
+     * @return ServiceDescription object with fields filled from the XML content
+     *
+     * @see Arrowhead documentation ServiceDiscovery REST_HTTP_COAP-JSON-XML
+     *
+     * @throws ContentError if there are any XML parsing errors
+     */
+    template<class StringType>
+        static ServiceDescription from_xml(const StringType& xml_str);
+
+    /**
+     * @brief Parse an XML representation of a single service
+     *
+     * @param[in]    xmlbuf  XML document C-string containing a `<service>` tag
+     * @param[in]    buflen  length of xmlbuf
+     *
+     * @return ServiceDescription object with fields filled from the XML content
+     *
+     * @see Arrowhead documentation ServiceDiscovery REST_HTTP_COAP-JSON-XML
+     *
+     * @throws ContentError if there are any XML parsing errors
+     */
+    static ServiceDescription from_xml(const char *xmlbuf, size_t buflen);
+
+    /** @} */
 };
+
+/**
+ * @ingroup  xml
+ * @{
+ */
+
+/**
+ * @brief Parse an XML representation of a service list and pass the parsed objects to oit
+ *
+ * @see Arrowhead documentation ServiceDiscovery REST_HTTP_COAP-JSON-XML
+
+ * @param[in]    oit     Output iterator where the parsed objects will be placed
+ * @param[in]    xml_str XML document string containing a `<serviceList>` tag
+ *
+ * @return Output iterator after outputting the objects
+ *
+ * @throws ContentError if there are any XML parsing errors
+ */
+template<class OutputIt, class StringType>
+    static OutputIt parse_servicelist_xml(OutputIt oit, const StringType& xml_str);
+
+/**
+ * @brief Parse an XML representation of a service list and pass the parsed objects to oit
+ *
+ * @param[in]    oit     Output iterator where the parsed objects will be placed
+ * @param[in]    xmlbuf  XML document C-string containing a `<serviceList>` tag
+ * @param[in]    buflen  length of xmlbuf
+ *
+ * @return Output iterator after outputting the objects
+ *
+ * @see Arrowhead documentation ServiceDiscovery REST_HTTP_COAP-JSON-XML
+ *
+ * @throws ContentError if there are any XML parsing errors
+ */
+template<class OutputIt>
+    static OutputIt parse_servicelist_xml(OutputIt oit, const char *xmlbuf, size_t buflen);
+
+/** @} */
 
 /** @} */
 
 } /* namespace Arrowhead */
+
+/* Template definitions are found in detail/xml.hpp */
+#include "arrowhead/detail/_service_xml.hpp"
+
 #endif /* ARROWHEAD_SERVICE_HPP_ */

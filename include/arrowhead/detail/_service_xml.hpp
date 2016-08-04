@@ -22,15 +22,17 @@
  * @author      Joakim Gebart Nohlgård <joakim@nohlgard.se>
  */
 
-#ifndef ARROWHEAD_DETAIL_XML_HPP_
-#define ARROWHEAD_DETAIL_XML_HPP_
+#ifndef ARROWHEAD_DETAIL_SERVICE_XML_HPP_
+#define ARROWHEAD_DETAIL_SERVICE_XML_HPP_
 
 #include <cstddef> // for size_t
 #include <sstream>
 
 #include "arrowhead/config.h"
 
+#if ARROWHEAD_USE_PUGIXML
 #include <pugixml.hpp>
+#endif
 
 #include "arrowhead/exception.hpp"
 #include "arrowhead/logging.hpp"
@@ -46,14 +48,6 @@ namespace XML {
  */
 
 #if ARROWHEAD_USE_PUGIXML
-/**
- * @brief Translate a single XML `<service>` node into a ServiceDescription
- *
- * @param[in] srv  A `<service>` XML node object
- *
- * @return ServiceDescription object with fields filled from the XML content
- */
-ServiceDescription to_service(const pugi::xml_node& srv);
 
 /**
  * @brief Parse document and throw exception if any errors occur.
@@ -66,13 +60,29 @@ ServiceDescription to_service(const pugi::xml_node& srv);
  */
 void parse_buffer(pugi::xml_document& doc, const char *xmlbuf, size_t buflen);
 
+/**
+ * @internal
+ * @brief Translate a single XML `<service>` node into a ServiceDescription
+ *
+ * @param[in] srv  A `<service>` XML node object
+ *
+ * @return ServiceDescription object with fields filled from the XML content
+ */
+ServiceDescription service_from_node(const pugi::xml_node& srv);
+
 #endif /* ARROWHEAD_USE_PUGIXML */
 
 /** @} */
 
 } /* namespace XML */
 
-/* Implementations of templates declared in include/arrowhead/xml.hpp */
+/* Implementations of templates declared in include/arrowhead/service.hpp */
+
+template<class StringType>
+    ServiceDescription ServiceDescription::from_xml(const StringType& xml_str)
+{
+    return ServiceDescription::from_xml(xml_str.c_str(), xml_str.size());
+}
 
 template<class OutputIt, class StringType>
     OutputIt parse_servicelist_xml(OutputIt oit, const StringType& xml_str)
@@ -80,13 +90,8 @@ template<class OutputIt, class StringType>
     return parse_servicelist_xml(oit, xml_str.c_str(), xml_str.size());
 }
 
-template<class StringType>
-    ServiceDescription parse_service_xml(const StringType& xml_str)
-{
-    return parse_service_xml(xml_str.c_str(), xml_str.size());
-}
-
 #if ARROWHEAD_USE_PUGIXML
+
 template<class OutputIt>
     OutputIt parse_servicelist_xml(OutputIt oit,
         const char *xmlbuf, size_t buflen)
@@ -97,7 +102,7 @@ template<class OutputIt>
     auto listnode = doc.child("serviceList");
     if (listnode) {
         for (auto srv: listnode.children("service")) {
-            ServiceDescription sd = XML::to_service(srv);
+            ServiceDescription sd = XML::service_from_node(srv);
             *oit++ = sd;
         }
     }

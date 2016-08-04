@@ -33,7 +33,6 @@
 
 #include "arrowhead/logging.hpp"
 #include "arrowhead/service.hpp"
-#include "arrowhead/xml.hpp"
 #include "arrowhead/http.hpp"
 #include "arrowhead/core_services/serviceregistry.hpp"
 #include "project_version.h"
