@@ -50,6 +50,7 @@ namespace XML {
 #if ARROWHEAD_USE_PUGIXML
 
 /**
+ * @internal
  * @brief Parse document and throw exception if any errors occur.
  *
  * @param[out]  doc     XML document object for containing the parsed tree
@@ -59,6 +60,10 @@ namespace XML {
  * @throws Arrowhead::ContentError If the buffer could not be parsed
  */
 void parse_buffer(pugi::xml_document& doc, const char *xmlbuf, size_t buflen);
+
+#endif /* ARROWHEAD_USE_PUGIXML */
+
+#if ARROWHEAD_USE_PUGIXML
 
 /**
  * @internal
@@ -112,5 +117,5 @@ template<class OutputIt>
 #endif /* ARROWHEAD_USE_PUGIXML */
 
 } /* namespace Arrowhead */
-#endif /* ARROWHEAD_DETAIL_XML_HPP_ */
+#endif /* ARROWHEAD_DETAIL_SERVICE_XML_HPP_ */
 
