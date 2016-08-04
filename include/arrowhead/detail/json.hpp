@@ -43,7 +43,7 @@ namespace Arrowhead {
 namespace JSON {
 
 /**
- * @ingroup xml_detail
+ * @ingroup json_detail
  * @{
  */
 
