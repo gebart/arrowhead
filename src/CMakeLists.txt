@@ -9,6 +9,7 @@ set(LIB_SRC_FILES
     content/json.cpp
     logging/logging.cpp
     transport/http.cpp
+    transport/coap.cpp
     )
 add_library(${PROJECT_NAME} ${LIB_SRC_FILES})
 add_dependencies(${PROJECT_NAME} version)
@@ -23,6 +24,10 @@ endif()
 
 if(ARROWHEAD_USE_LOG4CPLUS)
   target_link_libraries(${PROJECT_NAME} ${LOG4CPLUS_LIBRARIES})
+endif()
+
+if(ARROWHEAD_USE_LIBCOAP)
+  target_link_libraries(${PROJECT_NAME} ${COAP_LIBRARIES})
 endif()
 
 if(ARROWHEAD_USE_LIBCOAP)
