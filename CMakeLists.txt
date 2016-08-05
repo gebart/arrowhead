@@ -63,6 +63,7 @@ endif()
 option(ARROWHEAD_USE_LIBCOAP "Build library with CoAP support using libcoap" OFF)
 if(ARROWHEAD_USE_LIBCOAP)
   find_package(CoAP REQUIRED)
+  set(WITH_POSIX 1)
 endif()
 
 option(ARROWHEAD_USE_JSON "Build library with JSON support using bundled nlohmann::json" ON)
@@ -93,6 +94,10 @@ endif()
 
 if(ARROWHEAD_USE_LOG4CPLUS)
   include_directories(${LOG4CPLUS_INCLUDE_DIRS})
+endif()
+
+if(ARROWHEAD_USE_LIBCOAP)
+  include_directories(${COAP_INCLUDE_DIR})
 endif()
 
 add_subdirectory(tests)

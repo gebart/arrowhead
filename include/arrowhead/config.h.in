@@ -5,5 +5,6 @@
 #cmakedefine01 ARROWHEAD_USE_PUGIXML
 #cmakedefine01 ARROWHEAD_USE_LOG4CPLUS
 #cmakedefine01 ARROWHEAD_USE_JSON
+#cmakedefine WITH_POSIX
 
 #endif /* ARROWHEAD_CONFIG_H_ */

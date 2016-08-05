@@ -28,9 +28,9 @@ endif()
 
 # Support the REQUIRED and QUIET arguments, and set COAP_FOUND if found.
 include (FindPackageHandleStandardArgs)
-FIND_PACKAGE_HANDLE_STANDARD_ARGS (CoAP
-                                   REQUIRED_VARS COAP_LIBRARY COAP_INCLUDE_DIR
-                                   VERSION_VAR COAP_VERSION_STRING
+find_package_handle_standard_args(CoAP
+                                  REQUIRED_VARS COAP_LIBRARY COAP_INCLUDE_DIR
+                                  VERSION_VAR COAP_VERSION_STRING
 )
 
 if (COAP_FOUND)

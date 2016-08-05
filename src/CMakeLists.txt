@@ -18,15 +18,29 @@ if(ARROWHEAD_USE_LIBCURL)
 endif()
 
 if(ARROWHEAD_USE_PUGIXML)
-  target_link_libraries(${PROJECT_NAME} ${PUGIXML_LIBRARY})
+  target_link_libraries(${PROJECT_NAME} ${PUGIXML_LIBRARIES})
 endif()
 
 if(ARROWHEAD_USE_LOG4CPLUS)
   target_link_libraries(${PROJECT_NAME} ${LOG4CPLUS_LIBRARIES})
 endif()
 
+if(ARROWHEAD_USE_LIBCOAP)
+# Build the coap-server experiment
+find_package(Boost 1.40 COMPONENTS program_options system REQUIRED)
 
-if (ARROWHEAD_USE_PUGIXML AND ARROWHEAD_USE_LIBCURL)
+set(COAP_SERVER_SRC_FILES
+    server/coap-server.cpp
+    )
+add_executable(coap-server ${COAP_SERVER_SRC_FILES})
+add_dependencies(coap-server version)
+# Link to libarrowheadcpp
+target_link_libraries(coap-server ${PROJECT_NAME})
+# and Boost (for Boost::asio)
+target_link_libraries(coap-server ${COAP_LIBRARIES})
+endif()
+
+if(ARROWHEAD_USE_PUGIXML AND ARROWHEAD_USE_LIBCURL)
 # Build the ahq (Arrowhead Query) command line utility
 find_package(Boost 1.40 COMPONENTS program_options REQUIRED)
 
