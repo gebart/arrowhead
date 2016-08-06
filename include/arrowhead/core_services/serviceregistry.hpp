@@ -45,8 +45,6 @@ namespace Arrowhead {
  */
 class ServiceRegistryHTTP {
     private:
-
-    private:
         std::string url_base;
 
     public:
@@ -55,7 +53,7 @@ class ServiceRegistryHTTP {
          *
          * @param[in] url_base Base URL for the service registry REST API
          */
-        ServiceRegistryHTTP(std::string url_base)
+        ServiceRegistryHTTP(const std::string& url_base)
             : url_base(url_base)
         {}
 
@@ -64,7 +62,7 @@ class ServiceRegistryHTTP {
          *
          * @return HTTP response content (XML string)
          */
-        std::string types(void);
+        std::string types(void) const;
 
         /**
          * @brief List all services of the given type, or all services if type is empty
@@ -73,7 +71,7 @@ class ServiceRegistryHTTP {
          *
          * @return HTTP response content (XML string)
          */
-        std::string list(std::string type = std::string());
+        std::string list(const std::string& type = std::string()) const;
 
         /**
          * @brief Publish the given service in the service registry
@@ -82,7 +80,7 @@ class ServiceRegistryHTTP {
          *
          * @return HTTP response content
          */
-        std::string publish(ServiceDescription service);
+        std::string publish(const ServiceDescription& service) const;
 
         /**
          * @brief Publish the given service in the service registry
@@ -91,7 +89,7 @@ class ServiceRegistryHTTP {
          *
          * @return HTTP response content
          */
-        std::string unpublish(std::string name);
+        std::string unpublish(const std::string& name) const;
 };
 
 } /* namespace Arrowhead */

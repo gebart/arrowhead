@@ -68,7 +68,7 @@ void libcurl_perform_checked_throw(HTTP::CURLContext& ctx)
 }
 }
 
-std::string ServiceRegistryHTTP::types(void)
+std::string ServiceRegistryHTTP::types(void) const
 {
     ARROWHEAD_LIB_LOGGER(logger, "ServiceRegistryHTTP::types");
     ARROWHEAD_LIB_TRACE(logger, "+ServiceRegistryHTTP::types");
@@ -102,7 +102,7 @@ std::string ServiceRegistryHTTP::types(void)
     return buf.str();
 }
 
-std::string ServiceRegistryHTTP::list(std::string type)
+std::string ServiceRegistryHTTP::list(const std::string& type) const
 {
     ARROWHEAD_LIB_LOGGER(logger, "ServiceRegistryHTTP::list");
     ARROWHEAD_LIB_TRACE(logger, "+ServiceRegistryHTTP::list");
@@ -141,7 +141,7 @@ std::string ServiceRegistryHTTP::list(std::string type)
     return buf.str();
 }
 
-std::string ServiceRegistryHTTP::publish(ServiceDescription service)
+std::string ServiceRegistryHTTP::publish(const ServiceDescription& service) const
 {
     ARROWHEAD_LIB_LOGGER(logger, "ServiceRegistryHTTP::publish");
     ARROWHEAD_LIB_TRACE(logger, "+ServiceRegistryHTTP::publish");
@@ -205,7 +205,7 @@ std::string ServiceRegistryHTTP::publish(ServiceDescription service)
     return buf.str();
 }
 
-std::string ServiceRegistryHTTP::unpublish(std::string name)
+std::string ServiceRegistryHTTP::unpublish(const std::string& name) const
 {
     ARROWHEAD_LIB_LOGGER(logger, "ServiceRegistryHTTP::unpublish");
     ARROWHEAD_LIB_TRACE(logger, "+ServiceRegistryHTTP::unpublish");
