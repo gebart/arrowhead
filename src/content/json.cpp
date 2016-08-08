@@ -53,6 +53,31 @@ ServiceDescription service_from_obj(const nlohmann::json& srv)
     return sd;
 }
 
+nlohmann::json obj_from_service(const ServiceDescription& sd)
+{
+    using nlohmann::json; // Convenience
+    json js;
+    js["name"]   = sd.name;
+    js["type"]   = sd.type;
+    js["host"]   = sd.host;
+    js["domain"] = sd.domain;
+    js["port"]   = sd.port;
+    // Silly format, change the below monstrosity to simply
+    // js["properties"] = sd.properties;
+    // when/if the format specification is updated
+    js["properties"] = json::object();
+    std::vector<std::map<std::string, std::string> > props;
+    for (auto it = sd.properties.begin(); it != sd.properties.end(); ++it)
+    {
+        std::map<std::string, std::string> prop;
+        prop["name"] = it->first;
+        prop["value"] = it->second;
+        props.push_back(prop);
+    }
+    js["properties"]["property"] = props;
+    return js;
+}
+
 } /* namespace JSON */
 
 ServiceDescription ServiceDescription::from_json(const char *jsbuf, size_t buflen)

@@ -84,7 +84,7 @@ std::string ServiceRegistryHTTP::types(void) const
     curl_easy_setopt(ctx.curl, CURLOPT_URL, url.c_str());
 
     /* Set Accept: header */
-    ctx.add_header("Accept: application/xml");
+    ctx.add_header("Accept: application/json");
 
     /* Set up callback */
     ctx.set_write_iterator(std::ostream_iterator<char>(buf));
@@ -123,7 +123,7 @@ std::string ServiceRegistryHTTP::list(const std::string& type) const
     curl_easy_setopt(ctx.curl, CURLOPT_URL, url.c_str());
 
     /* Set Accept: header */
-    ctx.add_header("Accept: application/xml");
+    ctx.add_header("Accept: application/json");
 
     /* Set up callback */
     ctx.set_write_iterator(std::ostream_iterator<char>(buf));
@@ -147,29 +147,11 @@ std::string ServiceRegistryHTTP::publish(const ServiceDescription& service) cons
     ARROWHEAD_LIB_TRACE(logger, "+ServiceRegistryHTTP::publish");
     HTTP::CURLContext ctx;
     std::ostringstream buf;
-    std::ostringstream postdata;
 
     /* Create request data */
-    postdata << "<service>";
-    postdata
-        << "<domain>" << service.domain << "</domain>"
-        << "<host>" << service.host << "</host>"
-        << "<name>" << service.name << "</name>"
-        << "<port>" << service.port << "</port>"
-        << "<type>" << service.type << "</type>";
+    nlohmann::json js = Arrowhead::JSON::obj_from_service(service);
 
-    postdata << "<properties>";
-    for (auto& kv: service.properties) {
-        postdata << "<property>"
-            << "<name>" << kv.first << "</name>"
-            << "<value>" << kv.second << "</value>"
-            << "</property>";
-    }
-    postdata << "</properties>";
-
-    postdata << "</service>";
-
-    std::string poststr = postdata.str();
+    std::string poststr = js.dump();
 
     ARROWHEAD_LIB_DEBUG(logger, "POST: " << poststr);
 
@@ -183,10 +165,10 @@ std::string ServiceRegistryHTTP::publish(const ServiceDescription& service) cons
     curl_easy_setopt(ctx.curl, CURLOPT_URL, url.c_str());
 
     /* Set Accept: header */
-    ctx.add_header("Accept: application/xml");
+    ctx.add_header("Accept: application/json");
 
     /* Set Content-Type: header */
-    ctx.add_header("Content-Type: application/xml");
+    ctx.add_header("Content-Type: application/json");
 
     /* Set up callback */
     ctx.set_write_iterator(std::ostream_iterator<char>(buf));
@@ -211,14 +193,11 @@ std::string ServiceRegistryHTTP::unpublish(const std::string& name) const
     ARROWHEAD_LIB_TRACE(logger, "+ServiceRegistryHTTP::unpublish");
     HTTP::CURLContext ctx;
     std::ostringstream buf;
-    std::ostringstream postdata;
-
     /* Create request data, only the name is needed to unpublish something */
-    postdata << "<service>"
-        << "<name>" << name << "</name>"
-        << "</service>";
+    nlohmann::json js;
+    js["name"] = name;
 
-    std::string poststr = postdata.str();
+    std::string poststr = js.dump();
 
     ARROWHEAD_LIB_DEBUG(logger, "POST: " << poststr);
 
@@ -232,10 +211,10 @@ std::string ServiceRegistryHTTP::unpublish(const std::string& name) const
     curl_easy_setopt(ctx.curl, CURLOPT_URL, url.c_str());
 
     /* Set Accept: header */
-    ctx.add_header("Accept: application/xml");
+    ctx.add_header("Accept: application/json");
 
     /* Set Content-Type: header */
-    ctx.add_header("Content-Type: application/xml");
+    ctx.add_header("Content-Type: application/json");
 
     /* Set up callback */
     ctx.set_write_iterator(std::ostream_iterator<char>(buf));

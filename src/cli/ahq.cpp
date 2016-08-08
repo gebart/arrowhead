@@ -256,9 +256,9 @@ void ArrowheadQueryApp::list(std::list<std::string> args)
         type = args.front();
         args.pop_front();
     }
-    std::string xml = servicereg.list(type);
+    std::string js = servicereg.list(type);
     std::vector<ServiceDescription> servicelist;
-    parse_servicelist_xml(std::back_inserter(servicelist), xml);
+    parse_servicelist_json(std::back_inserter(servicelist), js);
 
     ARROWHEAD_LIB_INFO(logger, servicelist.size() << " services:");
     for (auto& srv: servicelist) {

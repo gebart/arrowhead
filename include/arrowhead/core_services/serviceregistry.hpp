@@ -60,7 +60,7 @@ class ServiceRegistryHTTP {
         /**
          * @brief List all available service types
          *
-         * @return HTTP response content (XML string)
+         * @return HTTP response content (JSON string)
          */
         std::string types(void) const;
 
@@ -69,7 +69,7 @@ class ServiceRegistryHTTP {
          *
          * @param[in] type   Service type, use "" to list all services of any type
          *
-         * @return HTTP response content (XML string)
+         * @return HTTP response content (JSON string)
          */
         std::string list(const std::string& type = std::string()) const;
 

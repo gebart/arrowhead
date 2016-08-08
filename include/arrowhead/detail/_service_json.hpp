@@ -58,6 +58,15 @@ namespace JSON {
  */
 ServiceDescription service_from_obj(const nlohmann::json& srv);
 
+/**
+ * @internal
+ * @brief Translate ServiceDescription into a JSON object
+ *
+ * @param[in] srv  Service to translate
+ *
+ * @return JSON object representation of the given service description
+ */
+nlohmann::json obj_from_service(const ServiceDescription& sd);
 #endif /* ARROWHEAD_USE_JSON */
 
 /** @} */
