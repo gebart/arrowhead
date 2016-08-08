@@ -65,10 +65,16 @@ class CoAPResource {
         CoAPResource& operator=(CoAPResource const&) = delete;
 
 #if ARROWHEAD_USE_LIBCOAP
+        /**
+         * @brief Register a handler function for the given method
+         */
         void register_handler(unsigned char method, coap_method_handler_t handler);
 #endif /* ARROWHEAD_USE_LIBCOAP */
 
 #if ARROWHEAD_USE_LIBCOAP
+        /**
+         * @brief Get a pointer to the underlying libcoap resource
+         */
         coap_resource_t *resource_ptr()
         {
             return res;
@@ -102,12 +108,34 @@ class CoAPResource {
         const std::string uri;
 };
 
+/**
+ * @brief CoAP context
+ *
+ * libcoap requires a context for most operations. A context contains
+ * information about the CoAP environment, such as network socket, provided
+ * resources etc.
+ */
 class CoAPContext {
     public:
+        /**
+         * @brief Construct a libcoap context using the specified UDP port
+         *
+         * The socket will be listening on all IPv4+IPv6 interfaces
+         *
+         * @param[in]  port  UDP port number
+         */
         CoAPContext(unsigned short port = 0);
 
+        /**
+         * @brief Construct a libcoap context using the given socket parameters
+         *
+         * @param[in]  sin6  IPv6 socket address parameters to bind to
+         */
         CoAPContext(const struct sockaddr_in6& sin6);
 
+        /**
+         * @brief Clean up and free libcoap allocated memory
+         */
         ~CoAPContext();
 
         // Disable copying for now
@@ -115,14 +143,29 @@ class CoAPContext {
         CoAPContext& operator=(CoAPContext const&) = delete;
 
 #if ARROWHEAD_USE_LIBCOAP
+        /**
+         * @brief Add a resource to the context
+         *
+         * wrapper for coap_add_resource
+         *
+         * @param[in]  res  resource to add
+         */
         void add_resource(coap_resource_t *res);
 #endif /* ARROWHEAD_USE_LIBCOAP */
+        /**
+         * @copydoc CoAPContext::add_resource(coap_resource_t*)
+         */
         void add_resource(CoAPResource& res);
 
 
         void run_forever();
 
-        void run_once();
+        /**
+         * @brief Read packets from the bound socket and handle them
+         *
+         * wrapper for coap_read
+         */
+        void perform_read();
 
     private:
 #if ARROWHEAD_USE_LIBCOAP

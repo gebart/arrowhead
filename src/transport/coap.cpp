@@ -114,22 +114,9 @@ void CoAPContext::run_forever()
     }
 }
 
-void CoAPContext::run_once()
+void CoAPContext::perform_read()
 {
-    using namespace std;
-    fd_set readfds;
-    FD_ZERO(&readfds);
-    FD_SET(ctx->sockfd, &readfds);
-    int result = select(FD_SETSIZE, &readfds, 0, 0, 0);
-    if (result < 0)
-    {
-        std::string err(strerror(errno));
-        throw std::runtime_error("select: " + err);
-    }
-    else if (result > 0 && FD_ISSET(ctx->sockfd, &readfds))
-    {
-        coap_read(ctx);
-    }
+    coap_read(ctx);
 }
 
 } /* namespace Arrowhead */

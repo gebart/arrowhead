@@ -13,8 +13,8 @@ hello_handler(coap_context_t *ctx, struct coap_resource_t *resource,
     (void)ctx;
     (void)resource;
     unsigned char buf[3];
-    const char* response_data     = "Hello World!";
-    response->hdr->code           = COAP_RESPONSE_CODE(205);
+    const char *response_data = "Hello World!";
+    response->hdr->code       = COAP_RESPONSE_CODE(205);
     coap_add_option(response, COAP_OPTION_CONTENT_TYPE, coap_encode_var_bytes(buf, COAP_MEDIATYPE_TEXT_PLAIN), buf);
     coap_add_data  (response, strlen(response_data), (unsigned char *)response_data);
 }
