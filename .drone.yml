@@ -7,7 +7,13 @@ build:
             - export $$TOOLCHAIN
             - mkdir build
             - cd build
-            - cmake ..
+            - cmake
+             -DARROWHEAD_USE_LIBCOAP=$$ARROWHEAD_USE_LIBCOAP
+             -DARROWHEAD_USE_LIBCURL=$$ARROWHEAD_USE_LIBCURL
+             -DARROWHEAD_USE_PUGIXML=$$ARROWHEAD_USE_PUGIXML
+             -DARROWHEAD_USE_LOG4CPLUS=$$ARROWHEAD_USE_LOG4CPLUS
+             -DARROWHEAD_USE_JSON=$$ARROWHEAD_USE_JSON
+             ..
             - make
             - make test
 compose:
