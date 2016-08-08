@@ -26,16 +26,16 @@ matrix:
         - CC=gcc CXX=g++
     ARROWHEAD_USE_LIBCOAP:
         - ON
-        - OFF
+        #- OFF
     ARROWHEAD_USE_LIBCURL:
         - ON
-        - OFF
+        #- OFF
     ARROWHEAD_USE_PUGIXML:
         - ON
-        - OFF
+        #- OFF
     ARROWHEAD_USE_LOG4CPLUS:
         - ON
-        - OFF
+        #- OFF
     ARROWHEAD_USE_JSON:
         - ON
-        - OFF
+        #- OFF
