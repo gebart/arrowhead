@@ -6,6 +6,7 @@
 
 #include "coap/coap.h"
 #include "arrowhead/coap.hpp"
+#include "arrowhead/core_services/serviceregistry.hpp"
 
 /* Ugly global state because of libcoap limitations (no opaque pointer in base
  * coap context struct) */
@@ -55,6 +56,16 @@ int main(int argc, char* argv[])
     boost::asio::deadline_timer tim(io_service, boost::posix_time::seconds(1));
     tim.async_wait(boost::bind(print,
         boost::asio::placeholders::error, &tim, &count));
+
+    Arrowhead::ServiceRegistryHTTP servicereg("http://localhost:8045/servicediscovery");
+    Arrowhead::ServiceDescription srv;
+    srv.name = argv[0];
+    srv.type = "example-server.arrowhead.cpp";
+    srv.host = "localhost";
+    srv.port = 13131;
+    srv.properties["version"] = "0.1";
+    srv.properties["path"] = "/hello";
+    servicereg.publish(srv);
 
     io_service.run();
     return 0;
