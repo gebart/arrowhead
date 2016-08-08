@@ -1,25 +1,45 @@
 #include "arrowhead/config.h"
 
 #include <boost/asio.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/bind.hpp>
 
 #include "coap/coap.h"
 #include "arrowhead/coap.hpp"
 
+/* Ugly global state because of libcoap limitations (no opaque pointer in base
+ * coap context struct) */
+int count = 0;
+
 /*
  * The resource handler
  */
-static void
-hello_handler(coap_context_t *ctx, struct coap_resource_t *resource,
+static void hello_handler(coap_context_t *ctx, struct coap_resource_t *resource,
               const coap_endpoint_t *local_interface, coap_address_t *peer,
               coap_pdu_t *request, str *token, coap_pdu_t *response)
 {
     (void)ctx;
     (void)resource;
     unsigned char buf[3];
-    const char *response_data = "Hello World!";
-    response->hdr->code       = COAP_RESPONSE_CODE(205);
+    response->hdr->code = COAP_RESPONSE_CODE(205);
     coap_add_option(response, COAP_OPTION_CONTENT_TYPE, coap_encode_var_bytes(buf, COAP_MEDIATYPE_TEXT_PLAIN), buf);
-    coap_add_data  (response, strlen(response_data), (unsigned char *)response_data);
+
+    std::ostringstream os;
+    os << count << " seconds since start";
+    std::string str(os.str());
+    // coap_add_data must be the last operation on the PDU.
+    coap_add_data(response, str.length(), reinterpret_cast<const unsigned char *>(str.c_str()));
+}
+
+void print(const boost::system::error_code& /*e*/,
+    boost::asio::deadline_timer* tim, int* count)
+{
+    std::cout << *count << std::endl;
+    ++(*count);
+
+    tim->expires_at(tim->expires_at() + boost::posix_time::seconds(1));
+    tim->async_wait(boost::bind(print,
+        boost::asio::placeholders::error, tim, count));
 }
 
 int main(int argc, char* argv[])
@@ -31,6 +51,10 @@ int main(int argc, char* argv[])
 
     Arrowhead::CoAPContext server(io_service, 13131);
     server.add_resource(hello);
+
+    boost::asio::deadline_timer tim(io_service, boost::posix_time::seconds(1));
+    tim.async_wait(boost::bind(print,
+        boost::asio::placeholders::error, &tim, &count));
 
     io_service.run();
     return 0;

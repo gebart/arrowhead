@@ -169,8 +169,10 @@ class CoAPContext {
          * @brief Set up internal state
          *
          * Called from the constructors to reduce the amount of copy+paste code
+         *
+         * @param[in]  listen_addr  address to bind to
          */
-        void initialize();
+        void initialize(const coap_address_t& listen_addr);
 
         /**
          * @internal
@@ -187,7 +189,6 @@ class CoAPContext {
         void handle_read(const boost::system::error_code& ec);
 
         coap_context_t *ctx;
-        coap_address_t  listen_addr;
         boost::asio::ip::udp::socket socket;
         bool read_queued;
 };

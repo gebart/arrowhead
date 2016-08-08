@@ -59,19 +59,21 @@ void CoAPResource::initialize()
 CoAPContext::CoAPContext(boost::asio::io_service& io_service, unsigned short port) :
     socket(io_service), read_queued(false)
 {
+    coap_address_t listen_addr;
     coap_address_init(&listen_addr);
     listen_addr.addr.sin6.sin6_family = AF_INET6;
     listen_addr.addr.sin6.sin6_addr   = IN6ADDR_ANY_INIT;
     listen_addr.addr.sin6.sin6_port   = htons(port);
-    initialize();
+    initialize(listen_addr);
 }
 
 CoAPContext::CoAPContext(boost::asio::io_service& io_service, const struct sockaddr_in6& sin6) :
     socket(io_service), read_queued(false)
 {
+    coap_address_t listen_addr;
     coap_address_init(&listen_addr);
     listen_addr.addr.sin6 = sin6;
-    initialize();
+    initialize(listen_addr);
 }
 
 CoAPContext::~CoAPContext()
@@ -80,7 +82,7 @@ CoAPContext::~CoAPContext()
     coap_free_context(ctx);
 }
 
-void CoAPContext::initialize()
+void CoAPContext::initialize(const coap_address_t& listen_addr)
 {
     ctx = coap_new_context(&listen_addr);
     if (ctx == 0) {
