@@ -18,3 +18,18 @@ matrix:
     TOOLCHAIN:
         - CC=clang CXX=clang++
         - CC=gcc CXX=g++
+    ARROWHEAD_USE_LIBCOAP:
+        - ON
+        - OFF
+    ARROWHEAD_USE_LIBCURL:
+        - ON
+        - OFF
+    ARROWHEAD_USE_PUGIXML:
+        - ON
+        - OFF
+    ARROWHEAD_USE_LOG4CPLUS:
+        - ON
+        - OFF
+    ARROWHEAD_USE_JSON:
+        - ON
+        - OFF
