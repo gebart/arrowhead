@@ -21,7 +21,7 @@ hello_handler(coap_context_t *ctx, struct coap_resource_t *resource,
 
 int main(int argc, char* argv[])
 {
-    Arrowhead::CoAPServer server(13131);
+    Arrowhead::CoAPContext server(13131);
     Arrowhead::CoAPResource hello("hello");
     hello.register_handler(COAP_REQUEST_GET, hello_handler);
     server.add_resource(hello);

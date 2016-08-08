@@ -50,9 +50,9 @@ void CoAPResource::initialize()
     }
 }
 
-/* CoAPServer ********************** */
+/* CoAPContext ********************** */
 
-CoAPServer::CoAPServer(unsigned short port)
+CoAPContext::CoAPContext(unsigned short port)
 {
     coap_address_init(&listen_addr);
     listen_addr.addr.sin6.sin6_family = AF_INET6;
@@ -65,7 +65,7 @@ CoAPServer::CoAPServer(unsigned short port)
     }
 }
 
-CoAPServer::CoAPServer(const struct sockaddr_in6& sin6)
+CoAPContext::CoAPContext(const struct sockaddr_in6& sin6)
 {
     coap_address_init(&listen_addr);
     listen_addr.addr.sin6 = sin6;
@@ -76,27 +76,26 @@ CoAPServer::CoAPServer(const struct sockaddr_in6& sin6)
     }
 }
 
-CoAPServer::~CoAPServer()
+CoAPContext::~CoAPContext()
 {
     // Clean up context
     coap_free_context(ctx);
 }
 
-void CoAPServer::add_resource(coap_resource_t *res)
+void CoAPContext::add_resource(coap_resource_t *res)
 {
     coap_add_resource(ctx, res);
 }
 
-void CoAPServer::add_resource(CoAPResource& res)
+void CoAPContext::add_resource(CoAPResource& res)
 {
     coap_add_resource(ctx, res.resource_ptr());
 }
 
-void CoAPServer::run_forever()
+void CoAPContext::run_forever()
 {
     using namespace std;
     fd_set readfds;
-    /*Listen for incoming connections*/
     while (1) {
         FD_ZERO(&readfds);
         FD_SET(ctx->sockfd, &readfds);
@@ -112,11 +111,10 @@ void CoAPServer::run_forever()
     }
 }
 
-void CoAPServer::run_once()
+void CoAPContext::run_once()
 {
     using namespace std;
     fd_set readfds;
-    /*Listen for incoming connections*/
     FD_ZERO(&readfds);
     FD_SET(ctx->sockfd, &readfds);
     int result = select(FD_SETSIZE, &readfds, 0, 0, 0);

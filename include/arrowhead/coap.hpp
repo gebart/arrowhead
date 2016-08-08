@@ -102,17 +102,17 @@ class CoAPResource {
         const std::string uri;
 };
 
-class CoAPServer {
+class CoAPContext {
     public:
-        CoAPServer(unsigned short port = 5683);
+        CoAPContext(unsigned short port = 0);
 
-        CoAPServer(const struct sockaddr_in6& sin6);
+        CoAPContext(const struct sockaddr_in6& sin6);
 
-        ~CoAPServer();
+        ~CoAPContext();
 
         // Disable copying for now
-        CoAPServer(CoAPServer const&) = delete;
-        CoAPServer& operator=(CoAPServer const&) = delete;
+        CoAPContext(CoAPContext const&) = delete;
+        CoAPContext& operator=(CoAPContext const&) = delete;
 
 #if ARROWHEAD_USE_LIBCOAP
         void add_resource(coap_resource_t *res);
