@@ -28,6 +28,8 @@
 
 #include <stdexcept> // for std::runtime_error
 #include <new> // for std::bad_alloc
+#include <cstring> // for strerror
+#include <errno.h> // for errno
 
 #if ARROWHEAD_USE_LIBCOAP
 #include "arrowhead/coap.hpp"
@@ -100,9 +102,10 @@ void CoAPContext::run_forever()
         FD_ZERO(&readfds);
         FD_SET(ctx->sockfd, &readfds);
         int result = select(FD_SETSIZE, &readfds, 0, 0, 0);
-        if (result < 0) /* socket error */
+        if (result < 0)
         {
-            throw std::runtime_error("socket read error");
+            std::string err(strerror(errno));
+            throw std::runtime_error("select: " + err);
         }
         else if (result > 0 && FD_ISSET(ctx->sockfd, &readfds))
         {
@@ -118,9 +121,10 @@ void CoAPContext::run_once()
     FD_ZERO(&readfds);
     FD_SET(ctx->sockfd, &readfds);
     int result = select(FD_SETSIZE, &readfds, 0, 0, 0);
-    if (result < 0) /* socket error */
+    if (result < 0)
     {
-        throw std::runtime_error("socket read error");
+        std::string err(strerror(errno));
+        throw std::runtime_error("select: " + err);
     }
     else if (result > 0 && FD_ISSET(ctx->sockfd, &readfds))
     {
