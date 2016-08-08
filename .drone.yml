@@ -1,6 +1,6 @@
 build:
     run_tests:
-        image: eistec/cpp-ci:latest
+        image: eistec/arrowhead-ci-build:latest
         environment:
             - CLICOLOR_FORCE=1
         commands:
