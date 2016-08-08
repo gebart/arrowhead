@@ -1,6 +1,9 @@
 #include "arrowhead/config.h"
-#include "arrowhead/coap.hpp"
+
+#include <boost/asio.hpp>
+
 #include "coap/coap.h"
+#include "arrowhead/coap.hpp"
 
 /*
  * The resource handler
@@ -21,10 +24,14 @@ hello_handler(coap_context_t *ctx, struct coap_resource_t *resource,
 
 int main(int argc, char* argv[])
 {
-    Arrowhead::CoAPContext server(13131);
+    boost::asio::io_service io_service;
+
     Arrowhead::CoAPResource hello("hello");
     hello.register_handler(COAP_REQUEST_GET, hello_handler);
+
+    Arrowhead::CoAPContext server(io_service, 13131);
     server.add_resource(hello);
-    server.run_forever();
+
+    io_service.run();
     return 0;
 }

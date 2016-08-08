@@ -64,6 +64,8 @@ option(ARROWHEAD_USE_LIBCOAP "Build library with CoAP support using libcoap" OFF
 if(ARROWHEAD_USE_LIBCOAP)
   find_package(CoAP REQUIRED)
   set(WITH_POSIX 1)
+  # We use Boost::Asio, with Boost::System for error reporting
+  find_package(Boost 1.40 COMPONENTS system REQUIRED)
 endif()
 
 option(ARROWHEAD_USE_JSON "Build library with JSON support using bundled nlohmann::json" ON)

@@ -27,12 +27,16 @@
 
 #include "arrowhead/config.h"
 
-#include <string> // for std::string
-#include <netinet/in.h> // For sockaddr_in6 et. al
+#include <netinet/in.h> // For sockaddr_in6
 
-#if ARROWHEAD_USE_LIBCOAP
+#include <string>
+#include <boost/asio.hpp>
+
+#if !ARROWHEAD_USE_LIBCOAP
+#error coap.hpp requires libarrowhead built with libcoap support!
+#endif /* !ARROWHEAD_USE_LIBCOAP */
+
 #include "coap/coap.h"
-#endif /* ARROWHEAD_USE_LIBCOAP */
 
 namespace Arrowhead {
 
@@ -64,14 +68,11 @@ class CoAPResource {
         CoAPResource(CoAPResource const&) = delete;
         CoAPResource& operator=(CoAPResource const&) = delete;
 
-#if ARROWHEAD_USE_LIBCOAP
         /**
          * @brief Register a handler function for the given method
          */
         void register_handler(unsigned char method, coap_method_handler_t handler);
-#endif /* ARROWHEAD_USE_LIBCOAP */
 
-#if ARROWHEAD_USE_LIBCOAP
         /**
          * @brief Get a pointer to the underlying libcoap resource
          */
@@ -79,7 +80,6 @@ class CoAPResource {
         {
             return res;
         }
-#endif /* ARROWHEAD_USE_LIBCOAP */
 
     private:
         /**
@@ -90,13 +90,11 @@ class CoAPResource {
          */
         void initialize();
 
-#if ARROWHEAD_USE_LIBCOAP
         /**
          * @internal
          * @brief Pointer to libcoap resource
          */
         coap_resource_t *res;
-#endif /* ARROWHEAD_USE_LIBCOAP */
 
         /**
          * @internal
@@ -122,16 +120,18 @@ class CoAPContext {
          *
          * The socket will be listening on all IPv4+IPv6 interfaces
          *
-         * @param[in]  port  UDP port number
+         * @param[in]  io_service  io_service object to manage the socket
+         * @param[in]  port        UDP port number
          */
-        CoAPContext(unsigned short port = 0);
+        CoAPContext(boost::asio::io_service& io_service, unsigned short port = 0);
 
         /**
          * @brief Construct a libcoap context using the given socket parameters
          *
-         * @param[in]  sin6  IPv6 socket address parameters to bind to
+         * @param[in]  io_service  io_service object to manage the socket
+         * @param[in]  sin6        IPv6 socket address parameters to bind to
          */
-        CoAPContext(const struct sockaddr_in6& sin6);
+        CoAPContext(boost::asio::io_service& io_service, const struct sockaddr_in6& sin6);
 
         /**
          * @brief Clean up and free libcoap allocated memory
@@ -142,7 +142,6 @@ class CoAPContext {
         CoAPContext(CoAPContext const&) = delete;
         CoAPContext& operator=(CoAPContext const&) = delete;
 
-#if ARROWHEAD_USE_LIBCOAP
         /**
          * @brief Add a resource to the context
          *
@@ -151,14 +150,11 @@ class CoAPContext {
          * @param[in]  res  resource to add
          */
         void add_resource(coap_resource_t *res);
-#endif /* ARROWHEAD_USE_LIBCOAP */
+
         /**
          * @copydoc CoAPContext::add_resource(coap_resource_t*)
          */
         void add_resource(CoAPResource& res);
-
-
-        void run_forever();
 
         /**
          * @brief Read packets from the bound socket and handle them
@@ -168,10 +164,32 @@ class CoAPContext {
         void perform_read();
 
     private:
-#if ARROWHEAD_USE_LIBCOAP
+        /**
+         * @internal
+         * @brief Set up internal state
+         *
+         * Called from the constructors to reduce the amount of copy+paste code
+         */
+        void initialize();
+
+        /**
+         * @internal
+         * @brief Handle all current libcoap events
+         */
+        void perform_operations();
+
+        /**
+         * @internal
+         * @copydoc CoAPContext::perform_read()
+         *
+         * @param[in]  ec  Error code from Boost::Asio
+         */
+        void handle_read(const boost::system::error_code& ec);
+
         coap_context_t *ctx;
         coap_address_t  listen_addr;
-#endif /* ARROWHEAD_USE_LIBCOAP */
+        boost::asio::ip::udp::socket socket;
+        bool read_queued;
 };
 
 /** @} */

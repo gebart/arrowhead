@@ -28,6 +28,7 @@ endif()
 
 if(ARROWHEAD_USE_LIBCOAP)
   target_link_libraries(${PROJECT_NAME} ${COAP_LIBRARIES})
+  target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 endif()
 
 if(ARROWHEAD_USE_LIBCOAP)
@@ -43,9 +44,10 @@ add_dependencies(coap-server version)
 target_link_libraries(coap-server ${PROJECT_NAME})
 # and Boost (for Boost::asio)
 target_link_libraries(coap-server ${COAP_LIBRARIES})
+target_link_libraries(coap-server ${Boost_LIBRARIES})
 endif()
 
-if(ARROWHEAD_USE_PUGIXML AND ARROWHEAD_USE_LIBCURL)
+if(ARROWHEAD_USE_JSON AND ARROWHEAD_USE_LIBCURL)
 # Build the ahq (Arrowhead Query) command line utility
 find_package(Boost 1.40 COMPONENTS program_options REQUIRED)
 
