@@ -1,22 +1,22 @@
-build:
+pipeline:
     run_tests:
         image: eistec/arrowhead-ci-build:latest
         environment:
             - CLICOLOR_FORCE=1
         commands:
-            - export $$TOOLCHAIN
+            - export ${TOOLCHAIN}
             - mkdir build
             - cd build
             - cmake
-             -DARROWHEAD_USE_LIBCOAP=$$ARROWHEAD_USE_LIBCOAP
-             -DARROWHEAD_USE_LIBCURL=$$ARROWHEAD_USE_LIBCURL
-             -DARROWHEAD_USE_PUGIXML=$$ARROWHEAD_USE_PUGIXML
-             -DARROWHEAD_USE_LOG4CPLUS=$$ARROWHEAD_USE_LOG4CPLUS
-             -DARROWHEAD_USE_JSON=$$ARROWHEAD_USE_JSON
+             -DARROWHEAD_USE_LIBCOAP=${ARROWHEAD_USE_LIBCOAP}
+             -DARROWHEAD_USE_LIBCURL=${ARROWHEAD_USE_LIBCURL}
+             -DARROWHEAD_USE_PUGIXML=${ARROWHEAD_USE_PUGIXML}
+             -DARROWHEAD_USE_LOG4CPLUS=${ARROWHEAD_USE_LOG4CPLUS}
+             -DARROWHEAD_USE_JSON=${ARROWHEAD_USE_JSON}
              ..
             - make
             - make test
-compose:
+services:
     serviceregistry:
         image: eistec/arrowhead-service-registry
 
