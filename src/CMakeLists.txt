@@ -31,6 +31,23 @@ if(ARROWHEAD_USE_LIBCOAP)
   target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 endif()
 
+install(TARGETS ${PROJECT_NAME}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  COMPONENT libraries)
+
+# Add the headers install target
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/arrowhead
+  DESTINATION include
+  COMPONENT headers
+  PATTERN "config.h.in" EXCLUDE
+  PATTERN "doc.txt" EXCLUDE)
+
+# Also, add the auto-generated header files
+install(DIRECTORY ${PROJECT_BINARY_DIR}/include/arrowhead
+  DESTINATION include
+  COMPONENT headers)
+
 if(ARROWHEAD_USE_LIBCOAP)
 # Build the coap-server experiment
 find_package(Boost 1.40 COMPONENTS program_options system REQUIRED)
@@ -45,6 +62,9 @@ target_link_libraries(coap-server ${PROJECT_NAME})
 # and Boost (for Boost::asio)
 target_link_libraries(coap-server ${COAP_LIBRARIES})
 target_link_libraries(coap-server ${Boost_LIBRARIES})
+install(TARGETS coap-server
+  RUNTIME DESTINATION bin
+  COMPONENT applications)
 endif()
 
 if(ARROWHEAD_USE_JSON AND ARROWHEAD_USE_LIBCURL)
@@ -60,11 +80,9 @@ add_dependencies(ahq version)
 target_link_libraries(ahq ${PROJECT_NAME})
 # and Boost (for Boost::program_options)
 target_link_libraries(ahq ${Boost_LIBRARIES})
+install(TARGETS ahq
+  RUNTIME DESTINATION bin
+  COMPONENT applications)
 else()
   message("ahq requires both libcurl and pugixml to be enabled")
 endif()
-
-#
-# installation & bundling
-#
-#install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_BINARY_DIR})

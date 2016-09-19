@@ -5,6 +5,14 @@ project(arrowhead)
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 include(version)
 
+# The project version number.
+set(VERSION_MAJOR   0   CACHE STRING "Project major version number.")
+set(VERSION_MINOR   0   CACHE STRING "Project minor version number.")
+set(VERSION_PATCH   1   CACHE STRING "Project patch version number.")
+mark_as_advanced(VERSION_MAJOR VERSION_MINOR VERSION_PATCH)
+
+include(cpack-project-settings)
+
 # Set a default build type if none was specified
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "Setting build type to 'Debug' as none was specified.")
@@ -72,12 +80,6 @@ option(ARROWHEAD_USE_JSON "Build library with JSON support using bundled nlohman
 
 configure_file(${CMAKE_SOURCE_DIR}/include/arrowhead/config.h.in ${CMAKE_BINARY_DIR}/include/arrowhead/config.h)
 
-# The project version number.
-set(VERSION_MAJOR   0   CACHE STRING "Project major version number.")
-set(VERSION_MINOR   0   CACHE STRING "Project minor version number.")
-set(VERSION_PATCH   1   CACHE STRING "Project patch version number.")
-mark_as_advanced(VERSION_MAJOR VERSION_MINOR VERSION_PATCH)
-
 # Enable unit testing via `make test`
 enable_testing()
 
@@ -106,3 +108,6 @@ add_subdirectory(tests)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 add_subdirectory(src)
 add_subdirectory(doc)
+
+# This must always be last!
+include(CPack)
