@@ -78,6 +78,10 @@ endif()
 
 option(ARROWHEAD_USE_JSON "Build library with JSON support using bundled nlohmann::json" ON)
 
+option(ARROWHEAD_BUILD_TOOLS "Build tools (ahq)" ON)
+option(ARROWHEAD_BUILD_TESTS "Build test cases" ON)
+option(ARROWHEAD_BUILD_EXAMPLES "Build code examples" ON)
+
 configure_file(${CMAKE_SOURCE_DIR}/include/arrowhead/config.h.in ${CMAKE_BINARY_DIR}/include/arrowhead/config.h)
 
 # Enable unit testing via `make test`
@@ -104,9 +108,13 @@ if(ARROWHEAD_USE_LIBCOAP)
   include_directories(${COAP_INCLUDE_DIR})
 endif()
 
+if(ARROWHEAD_BUILD_TESTS)
 add_subdirectory(tests)
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+endif()
 add_subdirectory(src)
+if(ARROWHEAD_BUILD_EXAMPLES)
+add_subdirectory(examples)
+endif()
 add_subdirectory(doc)
 
 # This must always be last!

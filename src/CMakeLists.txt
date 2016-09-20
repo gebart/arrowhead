@@ -2,7 +2,7 @@
 # dependencies
 #
 
-# Build libarrowheadcpp
+# Build libarrowhead
 set(LIB_SRC_FILES
     core_services/serviceregistry.cpp
     content/xml.cpp
@@ -48,41 +48,25 @@ install(DIRECTORY ${PROJECT_BINARY_DIR}/include/arrowhead
   DESTINATION include
   COMPONENT headers)
 
-if(ARROWHEAD_USE_LIBCOAP)
-# Build the coap-server experiment
-find_package(Boost 1.40 COMPONENTS program_options system REQUIRED)
+if(ARROWHEAD_BUILD_TOOLS)
+  set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+  if(ARROWHEAD_USE_JSON AND ARROWHEAD_USE_LIBCURL)
+    # Build the ahq (Arrowhead Query) command line utility
+    find_package(Boost 1.40 COMPONENTS program_options REQUIRED)
 
-set(COAP_SERVER_SRC_FILES
-    server/coap-server.cpp
-    )
-add_executable(coap-server ${COAP_SERVER_SRC_FILES})
-add_dependencies(coap-server version)
-# Link to libarrowheadcpp
-target_link_libraries(coap-server ${PROJECT_NAME})
-# and Boost (for Boost::asio)
-target_link_libraries(coap-server ${COAP_LIBRARIES})
-target_link_libraries(coap-server ${Boost_LIBRARIES})
-install(TARGETS coap-server
-  RUNTIME DESTINATION bin
-  COMPONENT applications)
-endif()
-
-if(ARROWHEAD_USE_JSON AND ARROWHEAD_USE_LIBCURL)
-# Build the ahq (Arrowhead Query) command line utility
-find_package(Boost 1.40 COMPONENTS program_options REQUIRED)
-
-set(AHQ_SRC_FILES
-    cli/ahq.cpp
-    )
-add_executable(ahq ${AHQ_SRC_FILES})
-add_dependencies(ahq version)
-# Link to libarrowheadcpp
-target_link_libraries(ahq ${PROJECT_NAME})
-# and Boost (for Boost::program_options)
-target_link_libraries(ahq ${Boost_LIBRARIES})
-install(TARGETS ahq
-  RUNTIME DESTINATION bin
-  COMPONENT applications)
-else()
-  message("ahq requires both libcurl and pugixml to be enabled")
+    set(AHQ_SRC_FILES
+      cli/ahq.cpp
+      )
+    add_executable(ahq ${AHQ_SRC_FILES})
+    add_dependencies(ahq version)
+    # Link to libarrowhead
+    target_link_libraries(ahq ${PROJECT_NAME})
+    # and Boost (for Boost::program_options)
+    target_link_libraries(ahq ${Boost_LIBRARIES})
+    install(TARGETS ahq
+      RUNTIME DESTINATION bin
+      COMPONENT applications)
+  else()
+    message("ahq requires both libcurl and json to be enabled")
+  endif()
 endif()
