@@ -108,6 +108,8 @@ class ArrowheadQueryApp {
         void unpublish(std::list<std::string> args);
 };
 
+const std::string ArrowheadQueryApp::version = VCS_VERSION_STR;
+
 int ArrowheadQueryApp::init(int argc, char * argv[])
 {
     // Initialize libcurl globals first of all, this function must only be
@@ -184,7 +186,7 @@ int ArrowheadQueryApp::init(int argc, char * argv[])
     }
 
     if (options.count("version")) {
-        std::cout << "Arrowhead service registry REST tool version " VCS_VERSION_STR << std::endl;
+        std::cout << "Arrowhead service registry REST tool version " << version << std::endl;
         return 1;
     }
 
@@ -214,7 +216,7 @@ int ArrowheadQueryApp::run()
     ARROWHEAD_LIB_LOGGER(logger, "ahq::run");
     ARROWHEAD_LIB_TRACE(logger, "+ArrowheadQueryApp::run");
 
-    ARROWHEAD_LIB_INFO(logger, "Starting (version: " VCS_VERSION_STR ")...");
+    ARROWHEAD_LIB_INFO(logger, "Starting (version: " << version << ")...");
 
     ARROWHEAD_LIB_INFO(logger, "Using Service Directory at " << options["url"].as<std::string>());
 
