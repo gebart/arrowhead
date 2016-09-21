@@ -36,18 +36,6 @@ install(TARGETS ${PROJECT_NAME}
   LIBRARY DESTINATION lib
   COMPONENT libraries)
 
-# Add the headers install target
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/arrowhead
-  DESTINATION include
-  COMPONENT headers
-  PATTERN "config.h.in" EXCLUDE
-  PATTERN "doc.txt" EXCLUDE)
-
-# Also, add the auto-generated header files
-install(DIRECTORY ${PROJECT_BINARY_DIR}/include/arrowhead
-  DESTINATION include
-  COMPONENT headers)
-
 if(ARROWHEAD_BUILD_TOOLS)
   set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
   if(ARROWHEAD_USE_JSON AND ARROWHEAD_USE_LIBCURL)
