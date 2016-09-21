@@ -48,7 +48,6 @@ using namespace Arrowhead;
  */
 
 /**
- * @ingroup  cli
  * @brief    Main application class for Service Registry command line interface
  */
 class ArrowheadQueryApp {
