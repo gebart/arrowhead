@@ -30,8 +30,6 @@
 #include "arrowhead/config.h"
 
 #include "arrowhead/service.hpp"
-#include "arrowhead/http.hpp"
-#include "arrowhead/logging.hpp"
 
 namespace Arrowhead {
 

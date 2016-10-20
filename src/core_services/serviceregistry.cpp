@@ -29,7 +29,11 @@
 #include <string>
 #include <iterator>
 #include <sstream>
+#include <curl/curl.h>
+
 #include "arrowhead/core_services/serviceregistry.hpp"
+#include "arrowhead/http.hpp"
+#include "arrowhead/logging.hpp"
 
 namespace Arrowhead {
 

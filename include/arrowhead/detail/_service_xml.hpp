@@ -35,7 +35,6 @@
 #endif
 
 #include "arrowhead/exception.hpp"
-#include "arrowhead/logging.hpp"
 #include "arrowhead/service.hpp"
 
 namespace Arrowhead {

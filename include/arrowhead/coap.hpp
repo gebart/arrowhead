@@ -36,7 +36,7 @@
 #error coap.hpp requires libarrowhead built with libcoap support!
 #endif /* !ARROWHEAD_USE_LIBCOAP */
 
-#include "coap/coap.h"
+#include <coap/coap.h>
 
 namespace Arrowhead {
 
